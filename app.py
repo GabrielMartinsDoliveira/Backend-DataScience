@@ -19,8 +19,8 @@ users = db['users']
 
 @dataclass
 class Localidade:
-    latitude: float = True
-    longitude: float = True
+    latitude: float 
+    longitude: float 
 
 @dataclass
 class Users:
@@ -31,6 +31,7 @@ class Users:
 
 @dataclass
 class Caso:
+    localidade: Localidade 
     titulo: str = True
     descricao: str = True
     status: str = True
@@ -38,21 +39,20 @@ class Caso:
     dataAbertura: datetime = True
     dataFechamento: datetime = True
     dataOcorrencia: datetime = True
-    localidade: Localidade 
-    
 
 @dataclass
 class Paciente:
-    peritoResponsavel: Users = True
-    NIC: str = True
-    nome: str
-    genero: str = True
+    nome: str               
     idade: int
     documento: str
     endereco: str
     etnia: str
     odontograma: str
     regiaoAnatomicas: str
+    genero: str = True
+    NIC: str = True
+    peritoResponsavel: Users = True
+
 
 @app.route('/api/casos', methods=['GET'])
 def listar_casos():
@@ -68,8 +68,6 @@ def listar_pacientes():
 def listar_usuarios():
     documentos = list(users.find({}, {"_id":0}))
     return jsonify(documentos), 200
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)

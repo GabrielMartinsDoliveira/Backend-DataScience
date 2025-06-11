@@ -13,7 +13,9 @@ CORS(app)
 MONGO_URL = os.getenv('MONGO_URL')
 client = MongoClient(MONGO_URL)
 db = client['test']
-colecao = db['cases', 'pacients', 'users']
+cases = db['cases']
+pacients = db['pacients']
+users = db['users']
 
 @dataclass
 class Localidade:
@@ -54,17 +56,17 @@ class Paciente:
 
 @app.route('/api/casos', methods=['GET'])
 def listar_casos():
-    documentos = list(colecao.find({}, {"_id":0}))
+    documentos = list(cases.find({}, {"_id":0}))
     return jsonify(documentos), 200
 
 @app.route('/api/pacientes', methods=['GET'])
 def listar_pacientes():
-    documentos = list(colecao.find({}, {"_id":0}))
+    documentos = list(pacients.find({}, {"_id":0}))
     return jsonify(documentos), 200
 
 @app.route('/api/usuarios', methods=['GET'])
 def listar_usuarios():
-    documentos = list(colecao.find({}, {"_id":0}))
+    documentos = list(users.find({}, {"_id":0}))
     return jsonify(documentos), 200
 
 
